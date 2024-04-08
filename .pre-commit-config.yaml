@@ -1,40 +1,31 @@
+---
+default_install_hook_types:
+  - pre-commit
+  - pre-push
+
 repos:
-  -
-    repo: local
+  - repo: local
     hooks:
-      -
-        id: isort
-        name: isort
-        entry: isort
+      - id: tests
+        stages: [ pre-push ]
+        name: tests
+        entry: just tests
         language: system
-        files: ^(chatushka|tests)/.+\.py$
-      -
-        id: black
-        name: black
-        entry: black
+        pass_filenames: false
+  - repo: local
+    hooks:
+      - id: format
+        name: format
+        entry: just --justfile justfile format
         language: system
-        files: ^(chatushka|tests)/.+\.py$
-      -
-        id: flake8
-        name: flake8
-        entry: flake8
+        pass_filenames: false
+      - id: lint
+        name: lint
+        entry: just --justfile justfile lint
         language: system
-        files: ^(chatushka|tests)/.+\.py$
-      -
-        id: pylint
-        name: pylint
-        entry: pylint
-        language: system
-        files: ^(chatushka|tests)/.+\.py$
-#      -
-#        id: mypy
-#        name: mypy
-#        entry: mypy
-#        language: system
-#        files: ^(twowires|tests)/.+\.py$
-  -
-    repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: "v3.4.0"
+        pass_filenames: false
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: "v4.5.0"
     hooks:
       - id: check-added-large-files
       - id: check-json

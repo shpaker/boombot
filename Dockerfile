@@ -1,7 +1,7 @@
 FROM python:3.9-slim as base-image
-ARG POETRY_VERSION=1.1.13
+ARG POETRY_VERSION=1.8.0
 WORKDIR /service
-RUN pip install "poetry==$POETRY_VERSION"
+RUN pip install "poetry~=$POETRY_VERSION"
 ADD pyproject.toml poetry.lock readme.md ./
 ADD chatushka chatushka
 RUN poetry build
